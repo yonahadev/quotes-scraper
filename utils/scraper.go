@@ -1,26 +1,27 @@
 package utils
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/PuerkitoBio/goquery"
 )
 
-func ScrapeData(res *http.Response) int {
+func ScrapeData(res *http.Response) string {
 	page, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	page.Find("div.quoteDetails").Each(func(index int, element *goquery.Selection) {
+	text := page.Find("div.quoteDetails").First().Text()
 
-		text := element.Text()
+	// page.Find("div.quoteDetails").Each(func(index int, element *goquery.Selection) {
 
-		fmt.Println(text)
-		// Do something with the textContent collected from this quoteElement
-	})
+	// 	text := element.Text()
 
-	return 0
+	// 	fmt.Println(text)
+	// 	// Do something with the textContent collected from this quoteElement
+	// })
+
+	return text
 }
