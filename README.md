@@ -1,5 +1,12 @@
 # quotes-scraper
-Simple quotes scraper for goodreads written in Go - capable of handling normal links, custom tag links and those with pagination as well.
+Simple quotes scraper for goodreads written in Go
+
+# features
+1. Single page scrapes
+2. Multi plage scrapes
+3. Interpret paginated links
+4. Interpret custom tag links
+5. Output in indented json format with 4 tabs
 
 # Instructions
 1. Fork the repository
