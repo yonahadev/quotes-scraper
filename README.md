@@ -1,7 +1,7 @@
 # quotes-scraper
 Simple quotes scraper for goodreads written in Go
 
-# features
+# Features
 1. Single page scrapes
 2. Multi plage scrapes
 3. Interpret paginated links
