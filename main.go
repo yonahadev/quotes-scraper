@@ -1,8 +1,7 @@
 package main
 
 import (
-	"log"
-	"net/http"
+	"fmt"
 	"scraper/utils"
 )
 
@@ -10,11 +9,9 @@ func main() {
 
 	url := utils.GetInput()
 
-	webpage, err := http.Get(url)
-	if err != nil {
-		log.Fatal("Please enter a valid url.")
-	}
+	page := utils.ProcessUrl(url)
 
-	utils.ScrapeData(webpage)
+	quotes := utils.ScrapeData(page)
 
+	fmt.Println(quotes)
 }
