@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"scraper/utils"
@@ -16,9 +15,6 @@ func main() {
 		log.Fatal("Please enter a valid url.")
 	}
 
-	scrapedText := utils.ScrapeData(webpage)
+	utils.ScrapeData(webpage)
 
-	quote := utils.ParseQuote(scrapedText)
-
-	fmt.Println(quote)
 }

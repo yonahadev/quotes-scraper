@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -15,13 +16,20 @@ func ScrapeData(res *http.Response) string {
 
 	text := page.Find("div.quoteDetails").First().Text()
 
-	// page.Find("div.quoteDetails").Each(func(index int, element *goquery.Selection) {
+	page.Find("div.quoteDetails").Each(func(index int, element *goquery.Selection) {
 
-	// 	text := element.Text()
+		quote := ParseQuote(element.Text())
+		author := element.Find("span.authorOrTitle").Text()
+		source := element.Find("span").Find("a.authorOrTitle").Text()
+		tags := element.Find("div.quoteFooter").Find("div.greyText").Text()
+		likes := element.Find("div.quoteFooter").Find("div.right").Text()
+		if source == "" {
+			source = "source is unknown"
+		}
 
-	// 	fmt.Println(text)
-	// 	// Do something with the textContent collected from this quoteElement
-	// })
+		fmt.Println(quote, author, source, tags, likes)
+		// Do something with the textContent collected from this quoteElement
+	})
 
 	return text
 }
