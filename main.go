@@ -31,13 +31,18 @@ func main() {
 	} else if scrapeMode == "multi" {
 		file := utils.CreateFile(fileName)
 		defer file.Close()
-		baseUrl := utils.ParseUrl(url)
+		url, tag := utils.ParseUrl(url)
 		for i := 1; i < 101; i++ {
-			currentUrl := baseUrl + "?page=" + strconv.Itoa(i)
+			currentUrl := ""
+			if tag == "" {
+				currentUrl = url + "?page=" + strconv.Itoa(i)
+			} else {
+				currentUrl = url + tag + "?page=" + strconv.Itoa(i) + "&utf8=✓"
+			}
 			page := utils.GetDocument(currentUrl)
 			numberOfQuotes := utils.ScrapeData(page, &quotes)
 			if numberOfQuotes == 0 {
-				fmt.Println("0 quotes found - terminating search.")
+				fmt.Println("0 quotes found - terminating search. Url:", currentUrl)
 				break
 			}
 			fmt.Println("Scraping:", currentUrl, numberOfQuotes, "quotes")

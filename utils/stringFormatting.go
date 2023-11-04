@@ -10,6 +10,8 @@ import (
 
 var quoteExpression = regexp.MustCompile(`“(.*?)”`) //.*? means non greedy - finds the first matching
 var urlExpression = regexp.MustCompile(`(\?page=\d+)|(#.+)`)
+var utf8Tag = regexp.MustCompile(`tag\?.*=`)
+var utf8Paginated = regexp.MustCompile(`&utf8=.*`)
 
 func ParseQuote(text string) string {
 	slice := quoteExpression.FindStringSubmatch(text)
@@ -51,8 +53,21 @@ func ParseTags(text string) []string {
 	return slice
 }
 
-func ParseUrl(url string) string {
+func ParseUrl(url string) (string, string) {
 	url = urlExpression.ReplaceAllLiteralString(url, "")
-	fmt.Println("Checking all entries under:", url)
-	return url
+	if len(utf8Paginated.FindAllString(url, -1)) > 0 {
+		fmt.Println("pagination match")
+		url = utf8Paginated.ReplaceAllLiteralString(url, "")
+		tag := strings.Replace(url, "https://www.goodreads.com/quotes/tag/", "", -1)
+		url = "https://www.goodreads.com/quotes/tag/"
+		fmt.Println("Checking entries under custom tag:", tag)
+		return url, tag
+	} else if len(utf8Tag.FindAllString(url, -1)) > 0 {
+		url = utf8Tag.ReplaceAllLiteralString(url, "")
+		tag := strings.Replace(url, "https://www.goodreads.com/quotes/", "", -1)
+		url = "https://www.goodreads.com/quotes/tag/"
+		fmt.Println("Checking entries under custom tag:", tag)
+		return url, tag
+	}
+	return url, ""
 }
