@@ -9,7 +9,7 @@ import (
 )
 
 var quoteExpression = regexp.MustCompile(`“(.*?)”`) //.*? means non greedy - finds the first matching
-var urlExpression = regexp.MustCompile(`\?page=\d+`)
+var urlExpression = regexp.MustCompile(`(\?page=\d+)|(#.+)`)
 
 func ParseQuote(text string) string {
 	slice := quoteExpression.FindStringSubmatch(text)
