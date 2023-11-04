@@ -1,35 +1,35 @@
 package utils
 
 import (
-	"fmt"
-	"log"
-	"net/http"
+	"scraper/structs"
 
 	"github.com/PuerkitoBio/goquery"
 )
 
-func ScrapeData(res *http.Response) string {
-	page, err := goquery.NewDocumentFromReader(res.Body)
-	if err != nil {
-		log.Fatal(err)
-	}
+func ScrapeData(page *goquery.Document) []structs.Quote {
 
-	text := page.Find("div.quoteDetails").First().Text()
+	var scrapedQuotes []structs.Quote
 
 	page.Find("div.quoteDetails").Each(func(index int, element *goquery.Selection) {
 
-		quote := ParseQuote(element.Text())
+		//find relevant dom text
+		text := element.Text()
 		author := element.Find("span.authorOrTitle").Text()
 		source := element.Find("span").Find("a.authorOrTitle").Text()
-		tags := element.Find("div.quoteFooter").Find("div.greyText").Text()
+		tagString := element.Find("div.quoteFooter").Find("div.greyText").Text()
 		likes := element.Find("div.quoteFooter").Find("div.right").Text()
-		if source == "" {
-			source = "source is unknown"
-		}
 
-		fmt.Println(quote, author, source, tags, likes)
-		// Do something with the textContent collected from this quoteElement
+		//format  text correctly
+		text = ParseQuote(text)
+		source = ParseSource(source)
+		author = ParseAuthor(author)
+		tags := ParseTags(tagString)
+		likeCount := ParseLikes(likes)
+
+		quote := structs.Quote{Text: text, Author: author, Source: source, Tags: tags, Likes: likeCount}
+
+		scrapedQuotes = append(scrapedQuotes, quote)
 	})
 
-	return text
+	return scrapedQuotes
 }
