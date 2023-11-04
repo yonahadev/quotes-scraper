@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var quoteExpression = regexp.MustCompile(`“(.*?)”`) //.*? means non greedy - finds the first matching
+var quoteExpression = regexp.MustCompile(`(?s)“(.*?)”`) //.*? means non greedy - finds the first matching
 var urlExpression = regexp.MustCompile(`(\?page=\d+)|(#.+)`)
 var utf8Tag = regexp.MustCompile(`tag\?.*=`)
 var utf8Paginated = regexp.MustCompile(`&utf8=.*`)
