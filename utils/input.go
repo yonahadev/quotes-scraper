@@ -5,7 +5,7 @@ import (
 )
 
 func GetInput(prompt string) string {
-	fmt.Println(prompt)
+	fmt.Print(prompt)
 
 	var userInput string
 	fmt.Scan(&userInput)

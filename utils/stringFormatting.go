@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"log"
 	"regexp"
 	"strconv"
@@ -8,6 +9,7 @@ import (
 )
 
 var quoteExpression = regexp.MustCompile(`“(.*?)”`) //.*? means non greedy - finds the first matching
+var urlExpression = regexp.MustCompile(`\?page=\d+`)
 
 func ParseQuote(text string) string {
 	slice := quoteExpression.FindStringSubmatch(text)
@@ -47,4 +49,10 @@ func ParseTags(text string) []string {
 		slice[i] = strings.TrimSpace(slice[i])
 	}
 	return slice
+}
+
+func ParseUrl(url string) string {
+	url = urlExpression.ReplaceAllLiteralString(url, "")
+	fmt.Println("Checking all entries under:", url)
+	return url
 }
