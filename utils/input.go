@@ -4,8 +4,8 @@ import (
 	"fmt"
 )
 
-func GetInput() string {
-	fmt.Println("Enter a valid goodreads quotes url:")
+func GetInput(prompt string) string {
+	fmt.Println(prompt)
 
 	var userInput string
 	fmt.Scan(&userInput)

@@ -43,5 +43,8 @@ func ParseTags(text string) []string {
 	text = strings.TrimSpace(text)
 	text = strings.Replace(text, "tags:", "", -1)
 	slice := strings.Split(text, ",")
+	for i := 0; i < len(slice); i++ {
+		slice[i] = strings.TrimSpace(slice[i])
+	}
 	return slice
 }
