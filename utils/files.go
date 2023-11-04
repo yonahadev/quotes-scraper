@@ -17,7 +17,7 @@ func WriteToFile(file *os.File, quote []structs.Quote) {
 	if err != nil {
 		log.Fatal("Error writing to file", err)
 	} else {
-		fmt.Println("Wrote", n, "bytes to file")
+		fmt.Println("Wrote", n, "bytes to", file.Name())
 	}
 }
 
@@ -26,7 +26,7 @@ func CreateFile(fileName string) *os.File {
 	if err != nil {
 		log.Fatal("Could not open/create file")
 	} else {
-		fmt.Println("Created/accessed file:", "output/"+fileName+".json")
+		fmt.Println("Created/accessed file:", file.Name())
 	}
 	return file
 }

@@ -6,9 +6,11 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func ScrapeData(page *goquery.Document) []structs.Quote {
+func ScrapeData(page *goquery.Document) ([]structs.Quote, int) {
 
 	var scrapedQuotes []structs.Quote
+
+	numberOfQuotes := page.Find("div.quoteDetails").Length()
 
 	page.Find("div.quoteDetails").Each(func(index int, element *goquery.Selection) {
 
@@ -31,5 +33,5 @@ func ScrapeData(page *goquery.Document) []structs.Quote {
 		scrapedQuotes = append(scrapedQuotes, quote)
 	})
 
-	return scrapedQuotes
+	return scrapedQuotes, numberOfQuotes
 }
