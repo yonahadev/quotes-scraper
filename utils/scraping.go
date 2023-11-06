@@ -71,7 +71,7 @@ func MultiScrape(fileName string, url string, quotes []structs.Quote) {
 		}
 		total += numberOfQuotes
 		fmt.Println("Scraping:", currentUrl, numberOfQuotes, "quotes")
-		time.Sleep(350 * time.Millisecond)
+		time.Sleep(50 * time.Millisecond)
 	}
 	WriteToFile(file, quotes)
 }

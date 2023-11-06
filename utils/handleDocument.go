@@ -12,6 +12,7 @@ func GetDocument(url string) *goquery.Document {
 	if err != nil {
 		log.Fatal("Please enter a valid url.")
 	}
+	defer webpage.Body.Close()
 	page, err := goquery.NewDocumentFromReader(webpage.Body)
 	if err != nil {
 		log.Fatal(err)
